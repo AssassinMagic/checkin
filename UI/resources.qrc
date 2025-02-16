@@ -1,0 +1,11 @@
+<!DOCTYPE RCC>
+<RCC>
+    <qresource prefix="/">
+        <file>icons/home.svg</file>
+        <file>icons/folder.svg</file>
+        <file>icons/settings.svg</file>
+        <file>icons/attendance.svg</file>
+        <file>icons/toggle_off.svg</file>
+        <file>icons/toggle_on.svg</file>
+    </qresource>
+</RCC>

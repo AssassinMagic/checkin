@@ -7,6 +7,7 @@ from PyQt6.QtQml import QQmlApplicationEngine
 from PyQt6.QtQuick import QQuickWindow
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 
+import resources_rc  # Import the compiled resources
 
 class Backend(QObject):
     updated = pyqtSignal(str, arguments=['updater'])
