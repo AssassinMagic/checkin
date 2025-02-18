@@ -1,60 +1,83 @@
-import QtQuick
-import QtQuick.Controls
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 Rectangle {
     width: parent.width
     height: parent.height
     color: "#18392B"
 
-    ListView {
-        id: userListView
+    Column {
+        spacing: 10
         width: parent.width
         height: parent.height
-        clip: true
-        model: userModel
-        delegate: Item {
-            width: userListView.width
+
+        // Hardcoded user information
+        Rectangle {
+            width: parent.width
             height: 100
-            Rectangle {
-                width: parent.width
-                height: parent.height
-                color: "#FFFFFF"
-                radius: 10
-                border.color: "#CCCCCC"
-                border.width: 1
-                Row {
-                    anchors.fill: parent
-                    anchors.margins: 10
-                    spacing: 20
-                    Column {
-                        Text {
-                            text: model.name
-                            font.pixelSize: 20
-                        }
-                        Text {
-                            text: model.email
-                            font.pixelSize: 16
-                        }
+            color: "#FFFFFF"
+            radius: 10
+            border.color: "#CCCCCC"
+            border.width: 1
+            Row {
+                anchors.fill: parent
+                anchors.margins: 10
+                spacing: 20
+                Column {
+                    Text {
+                        text: "John Doe"
+                        font.pixelSize: 20
                     }
-                    Column {
-                        Text {
-                            text: "Skate Size: " + model.skateSize
-                            font.pixelSize: 16
-                        }
-                        Text {
-                            text: "Time Slot: " + model.timeSlot
-                            font.pixelSize: 16
-                        }
+                    Text {
+                        text: "john.doe@example.com"
+                        font.pixelSize: 16
+                    }
+                }
+                Column {
+                    Text {
+                        text: "Skate Size: 10"
+                        font.pixelSize: 16
+                    }
+                    Text {
+                        text: "Time Slot: 10:00 AM - 11:00 AM"
+                        font.pixelSize: 16
                     }
                 }
             }
         }
-    }
 
-    ListModel {
-        id: userModel
-        // Example data, replace with actual data from the database
-        ListElement { name: "John Doe"; email: "john.doe@example.com"; skateSize: "10"; timeSlot: "10:00 AM - 11:00 AM" }
-        ListElement { name: "Jane Smith"; email: "jane.smith@example.com"; skateSize: "8"; timeSlot: "11:00 AM - 12:00 PM" }
+        Rectangle {
+            width: parent.width
+            height: 100
+            color: "#FFFFFF"
+            radius: 10
+            border.color: "#CCCCCC"
+            border.width: 1
+            Row {
+                anchors.fill: parent
+                anchors.margins: 10
+                spacing: 20
+                Column {
+                    Text {
+                        text: "Jane Smith"
+                        font.pixelSize: 20
+                    }
+                    Text {
+                        text: "jane.smith@example.com"
+                        font.pixelSize: 16
+                    }
+                }
+                Column {
+                    Text {
+                        text: "Skate Size: 8"
+                        font.pixelSize: 16
+                    }
+                    Text {
+                        text: "Time Slot: 11:00 AM - 12:00 PM"
+                        font.pixelSize: 16
+                    }
+                }
+            }
+        }
     }
 }

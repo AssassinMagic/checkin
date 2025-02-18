@@ -10,8 +10,9 @@ ApplicationWindow {
     title: "Evergreen Technologies"
     Material.theme: Material.Dark
 
-    property bool isCollapsed: true // Sidebar initially collapsed
-
+    property string currTime: "00:00:00"
+    property QtObject backend
+    property bool isCollapsed: false // Sidebar toggle state
 
     Row {
         anchors.fill: parent
@@ -19,54 +20,51 @@ ApplicationWindow {
         // Sidebar (Collapsible)
         Rectangle {
             id: sidebar
-            width: isCollapsed ? 60 : 200
+            width: isCollapsed ? 50 : 150
             height: parent.height
             color: "#2c3e50" // Dark Sidebar Color
 
-            Behavior on width { NumberAnimation { duration: 150 } } // Smooth Collapse/Expand Animation
+            Behavior on width { NumberAnimation { duration: 300 } } // Smooth Collapse/Expand Animation
 
             Column {
                 anchors.fill: parent
-                spacing: 15
+                spacing: 10
                 padding: 10
 
                 SidebarButton {
-                    iconSource: "qrc:/icons/home.svg"
+                    iconSource: "icons/home.svg"
                     tooltip: "Home"
                     onClicked: contentLoader.source = "HomePage.qml"
                 }
 
                 SidebarButton {
-                    iconSource: "qrc:/icons/folder.svg"
+                    iconSource: "icons/folder.svg"
                     tooltip: "Files"
                     onClicked: contentLoader.source = "FilesPage.qml"
                 }
 
                 SidebarButton {
-                    iconSource: "qrc:/icons/settings.svg"
+                    iconSource: "icons/settings.svg"
                     tooltip: "Settings"
                     onClicked: contentLoader.source = "SettingsPage.qml"
                 }
 
                 SidebarButton {
-                    iconSource: "qrc:/icons/attendance.svg"
+                    iconSource: "icons/attendance.svg"
                     tooltip: "Attendance"
                     onClicked: contentLoader.source = "AttendancePage.qml"
                 }
 
+                // Sidebar Toggle Button
                 SidebarButton {
-                    id: sidebarToggleButton
-                    iconSource: isCollapsed ? "qrc:/icons/toggle_off.svg" : "qrc:/icons/toggle_on.svg"
+                    iconSource: isCollapsed ? "icons/toggle_on.svg" : "icons/toggle_off.svg"
                     tooltip: "Toggle Sidebar"
-                    onClicked: {
-                        isCollapsed = !isCollapsed
-                        sidebarToggleButton.iconSource = isCollapsed ? "qrc:/icons/toggle_off.svg" : "qrc:/icons/toggle_on.svg"
-                    }
+                    onClicked: isCollapsed = !isCollapsed
                 }
             }
         }
 
-        // Main content area
+        // Main content area (Updates when page switches)
         Rectangle {
             id: mainContent
             width: parent.width - sidebar.width
@@ -78,6 +76,17 @@ ApplicationWindow {
                 anchors.fill: parent
                 source: "HomePage.qml" // Default page
             }
+        }
+    }
+
+    // Connect Backend Signals for Dynamic Page Loading
+    Connections {
+        target: backend
+        function onUpdated(msg) {
+            currTime = msg;
+        }
+        function onLoadPage(page) {
+            contentLoader.source = page;
         }
     }
 }

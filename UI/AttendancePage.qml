@@ -8,9 +8,7 @@ Rectangle {
     Material.theme: Material.Dark
 
     Column {
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.fill: parent
         spacing: 10
         padding: 10
 
@@ -33,12 +31,6 @@ Rectangle {
             TextField {
                 placeholderText: "Search..."
                 width: parent.width - 50
-                background: Rectangle {
-                    color: "#FFFFFF"
-                    radius: 10
-                    border.color: "#CCCCCC"
-                    border.width: 1
-                }
                 padding: 10
                 font.pixelSize: 16
             }
