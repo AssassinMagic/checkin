@@ -29,17 +29,17 @@ Rectangle {
                         font.pixelSize: 20
                     }
                     Text {
-                        text: model.email
+                        text: model.user_email
                         font.pixelSize: 16
                     }
                 }
                 Column {
                     Text {
-                        text: "Skate Size: " + model.skateSize
+                        text: "Skate Size: " + model.skate_size
                         font.pixelSize: 16
                     }
                     Text {
-                        text: "Time Slot: " + model.timeSlot
+                        text: "Time Slot: " + model.skate_time
                         font.pixelSize: 16
                     }
                 }
@@ -50,7 +50,7 @@ Rectangle {
     ListModel {
         id: userModel
         // Example data, replace with actual data from the database
-        ListElement { name: "John Doe"; email: "john.doe@example.com"; skateSize: "10"; timeSlot: "10:00 AM - 11:00 AM" }
-        ListElement { name: "Jane Smith"; email: "jane.smith@example.com"; skateSize: "8"; timeSlot: "11:00 AM - 12:00 PM" }
+        ListElement { name: "John Doe"; user_email: "john.doe@example.com"; skate_size: "10"; skate_size: "10:00 AM - 11:00 AM" }
+        ListElement { name: "Jane Smith"; user_email: "jane.smith@example.com"; skate_size: "8"; skate_size: "11:00 AM - 12:00 PM" }
     }
 }

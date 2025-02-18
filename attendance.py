@@ -20,7 +20,14 @@ class AttendanceBackend(QObject):
 
     def process_card_info(self, user_info):
         """Process the card information and interact with the database."""
-        self.database.add_user_to_db(user_info)
+        student_id = user_info.get("studentID")
+        db_user_info = self.database.get_user_by_student_id(student_id)
+        if db_user_info:
+            user_info.update(db_user_info)
+        else:
+            # If user is not found in the database, add the new user
+            self.database.add_user_to_db(user_info)
+        
         self.addUser(user_info)
 
     def start_card_reader(self):

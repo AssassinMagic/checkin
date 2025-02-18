@@ -9,13 +9,13 @@ class CardReader:
         """Extracts student ID and name from swipe data."""
         # Extract student ID (between first and second caret '^')
         match = re.search(r'\^([^ ^]+)\^', swipe)
-        studentID = match.group(1) if match else ""
+        student_id = match.group(1) if match else ""
 
         # Extract name (between last caret '^' and question mark '?'), removing commas
         match = re.search(r'\^([^?]+)\?', swipe.split('^')[-1])
         name = match.group(1).replace(',', '') if match else ""
 
-        return studentID, name
+        return student_id, name
 
     def start(self):
         """Start a background thread to read swipe data from the card reader."""
@@ -28,14 +28,12 @@ class CardReader:
         while True:
             try:
                 swipe = input("Waiting for card: ")  # User swipes the card
-                studentID, name = self.parse(swipe)
+                student_id, name = self.parse(swipe)
                 print(f"Name: {name}")
-                print(f"Student ID: {studentID}")
+                print(f"Student ID: {student_id}")
                 user_info = {
                     "name": name,
-                    "email": f"{studentID}@example.com",  # Example email, replace with actual logic
-                    "skateSize": "9",  # Example skate size, replace with actual logic
-                    "timeSlot": "12:00 PM - 1:00 PM"  # Example time slot, replace with actual logic
+                    "student_id": student_id,  
                 }
                 self.callback(user_info)
             except KeyboardInterrupt:
