@@ -63,3 +63,25 @@ class Database:
             except Exception as e:
                 print(f"Error querying database: {e}")
         return None
+    
+    def get_user_by_email(self, email):
+        """Retrieve user information from the database by email."""
+        if self.connection:
+            try:
+                with self.connection.cursor() as cursor:
+                    cursor.execute('''
+                        SELECT name, user_email, skate_size, skate_time
+                        FROM reservations
+                        WHERE user_email = %s
+                    ''', (email,))
+                    user_info = cursor.fetchone()
+                    if user_info:
+                        return {
+                            "name": user_info[0],
+                            "email": user_info[1],
+                            "skate_size": user_info[2],
+                            "skate_time": user_info[3]
+                        }
+            except Exception as e:
+                print(f"Error querying database: {e}")
+        return None

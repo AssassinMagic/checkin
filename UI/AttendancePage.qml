@@ -22,10 +22,7 @@ Rectangle {
                 height: searchField.height
                 Material.background: Material.White
                 Material.foreground: Material.Black
-                onClicked: {
-                    // Example user info, replace with actual data from the database
-                    attendanceBackend.addUser({ "name": "New User", "email": "new.user@example.com", "skateSize": "9", "timeSlot": "12:00 PM - 1:00 PM" })
-                }
+                onClicked: addUserDialog.open()
             }
 
             TextField {
@@ -42,6 +39,30 @@ Rectangle {
         UserLog {
             width: parent.width
             height: parent.height - 100
+        }
+    }
+
+    Dialog {
+        id: addUserDialog
+        title: "Search User"
+        modal: true
+        standardButtons: Dialog.Ok | Dialog.Cancel
+        onAccepted: {
+            attendanceBackend.searchUserByEmail(emailField.text)
+        }
+
+        Column {
+            spacing: 10
+            padding: 10
+
+            TextField {
+                id: emailField
+                placeholderText: "Email"
+                width: parent.width
+                font.pixelSize: 16
+                Material.background: Material.White
+                Material.foreground: Material.Black
+            }
         }
     }
 }

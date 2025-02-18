@@ -18,6 +18,13 @@ class AttendanceBackend(QObject):
         """Add user information to the ListModel in QML."""
         self.addUserSignal.emit(user_info)
 
+    @pyqtSlot(str)
+    def searchUserByEmail(self, email):
+        """Search for a user by email and add to the ListModel if found."""
+        user_info = self.database.get_user_by_email(email)
+        if user_info:
+            self.addUser(user_info)
+
     def process_card_info(self, user_info):
         """Process the card information and interact with the database."""
         student_id = user_info.get("studentID")
