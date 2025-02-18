@@ -10,21 +10,17 @@ ApplicationWindow {
     title: "Evergreen Technologies"
     Material.theme: Material.Dark
 
-    property string currTime: "00:00:00"
     property QtObject backend
-    property bool isCollapsed: false // Sidebar toggle state
 
     Row {
         anchors.fill: parent
 
-        // Sidebar (Collapsible)
+        // Fixed Sidebar
         Rectangle {
             id: sidebar
-            width: isCollapsed ? 50 : 150
+            width: 50
             height: parent.height
             color: "#2c3e50" // Dark Sidebar Color
-
-            Behavior on width { NumberAnimation { duration: 300 } } // Smooth Collapse/Expand Animation
 
             Column {
                 anchors.fill: parent
@@ -54,13 +50,6 @@ ApplicationWindow {
                     tooltip: "Attendance"
                     onClicked: contentLoader.source = "AttendancePage.qml"
                 }
-
-                // Sidebar Toggle Button
-                SidebarButton {
-                    iconSource: isCollapsed ? "icons/toggle_on.svg" : "icons/toggle_off.svg"
-                    tooltip: "Toggle Sidebar"
-                    onClicked: isCollapsed = !isCollapsed
-                }
             }
         }
 
@@ -82,9 +71,6 @@ ApplicationWindow {
     // Connect Backend Signals for Dynamic Page Loading
     Connections {
         target: backend
-        function onUpdated(msg) {
-            currTime = msg;
-        }
         function onLoadPage(page) {
             contentLoader.source = page;
         }

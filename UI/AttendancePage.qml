@@ -18,21 +18,24 @@ Rectangle {
 
             Button {
                 text: "+"
-                width: 30
-                height: 30
-                background: Rectangle {
-                    color: "#FFFFFF"
-                    radius: 10
-                    border.color: "#CCCCCC"
-                    border.width: 1
+                width: searchField.height
+                height: searchField.height
+                Material.background: Material.White
+                Material.foreground: Material.Black
+                onClicked: {
+                    // Example user info, replace with actual data from the database
+                    attendanceBackend.addUser({ "name": "New User", "email": "new.user@example.com", "skateSize": "9", "timeSlot": "12:00 PM - 1:00 PM" })
                 }
             }
 
             TextField {
+                id: searchField
                 placeholderText: "Search..."
-                width: parent.width - 50
+                width: parent.width - searchField.height - 10
                 padding: 10
                 font.pixelSize: 16
+                Material.background: Material.White
+                Material.foreground: Material.Black
             }
         }
 
