@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 
 Rectangle {
     width: parent.width
@@ -12,36 +13,26 @@ Rectangle {
         height: parent.height
         clip: true
         model: userModel
-        delegate: Rectangle {
+        delegate: Item {
             width: parent.width
             height: 100
-            color: "#FFFFFF"
-            radius: 10
-            border.color: "#CCCCCC"
-            border.width: 1
-            Row {
-                anchors.fill: parent
-                anchors.margins: 10
-                spacing: 20
-                Column {
-                    Text {
-                        text: model.name
-                        font.pixelSize: 20
-                    }
-                    Text {
-                        text: model.user_email
-                        font.pixelSize: 16
-                    }
+            Column {
+                spacing: 5
+                Text {
+                    text: "Name: " + model.name
+                    font.pixelSize: 16
                 }
-                Column {
-                    Text {
-                        text: "Skate Size: " + model.skate_size
-                        font.pixelSize: 16
-                    }
-                    Text {
-                        text: "Time Slot: " + model.skate_time
-                        font.pixelSize: 16
-                    }
+                Text {
+                    text: "Email: " + model.user_email
+                    font.pixelSize: 16
+                }
+                Text {
+                    text: "Skate Size: " + model.skate_size
+                    font.pixelSize: 16
+                }
+                Text {
+                    text: "Time Slot: " + model.skate_time
+                    font.pixelSize: 16
                 }
             }
         }
@@ -49,8 +40,12 @@ Rectangle {
 
     ListModel {
         id: userModel
-        // Example data, replace with actual data from the database
-        ListElement { name: "John Doe"; user_email: "john.doe@example.com"; skate_size: "10"; skate_time: "10:00 AM - 11:00 AM" }
-        ListElement { name: "Jane Smith"; user_email: "jane.smith@example.com"; skate_size: "8"; skate_time: "11:00 AM - 12:00 PM" }
+    }
+
+    Connections {
+        target: attendanceBackend
+        function onAddUser(user_info) {
+            userModel.append(user_info)
+        }
     }
 }

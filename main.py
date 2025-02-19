@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     # Load the QML UI
     engine.quit.connect(app.quit)
-    engine.load("UI/main.qml")
+    engine.load('UI/main.qml')
 
     if not engine.rootObjects():
         sys.exit(-1)
