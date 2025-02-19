@@ -27,29 +27,33 @@ class AttendanceBackend(QObject):
 
     def process_card_info(self, user_info):
         """Process the card information and interact with the database."""
-        student_id = user_info.get("studentID")
+        student_id = user_info.get("student_id")
         db_user_info = self.database.get_user_by_student_id(student_id)
         if db_user_info:
+            print(f"User with student ID {student_id} found in the database.")
             user_info.update(db_user_info)
+            print(f"Updated user info: {user_info}")
         else:
-            # If user is not found in the database, add the new user
-            self.database.add_user_to_db(user_info)
-        
+            print(f"User with student ID {student_id} not found in the database.")
+            # Ensure user_info has all required fields before adding to the database
+            if 'email' not in user_info:
+                user_info['email'] = 'unknown@example.com'  # Default email if not provided
+            if 'skate_size' not in user_info:
+                user_info['skate_size'] = 'unknown'  # Default skate size if not provided
+            if 'skate_time' not in user_info:
+                user_info['skate_time'] = 'unknown'  # Default skate time if not provided
+            print(f"Default user info: {user_info}")
+
         self.addUser(user_info)
+        print(f"Final user info sent to addUser: {user_info}")
 
     def start_card_reader(self):
         """Start the card reader."""
         self.card_reader.start()
 
 def main():
-    backend = AttendanceBackend()
-    backend.start_card_reader()
-    while True:
-        try:
-            pass  # Keep the main thread alive
-        except KeyboardInterrupt:
-            print("\nExiting program.")
-            break  # Allows graceful exit with Ctrl+C
+    attendance = AttendanceBackend()
+    attendance.start_card_reader()
 
 if __name__ == "__main__":
     main()

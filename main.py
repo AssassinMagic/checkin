@@ -19,9 +19,6 @@ class Backend(QObject):
         self.loadPageSignal.emit(page_name)
 
 
-# Ensure QML uses the software renderer
-QQuickWindow.setSceneGraphBackend('software')
-
 if __name__ == "__main__":
     # Start the PyQt6 application
     app = QGuiApplication(sys.argv)
@@ -36,7 +33,7 @@ if __name__ == "__main__":
 
     # Load the QML UI
     engine.quit.connect(app.quit)
-    engine.load('UI/main.qml')
+    engine.load("UI/main.qml")
 
     if not engine.rootObjects():
         sys.exit(-1)

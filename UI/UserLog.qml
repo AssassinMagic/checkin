@@ -50,7 +50,7 @@ Rectangle {
     ListModel {
         id: userModel
         // Example data, replace with actual data from the database
-        ListElement { name: "John Doe"; user_email: "john.doe@example.com"; skate_size: "10"; skate_size: "10:00 AM - 11:00 AM" }
-        ListElement { name: "Jane Smith"; user_email: "jane.smith@example.com"; skate_size: "8"; skate_size: "11:00 AM - 12:00 PM" }
+        ListElement { name: "John Doe"; user_email: "john.doe@example.com"; skate_size: "10"; skate_time: "10:00 AM - 11:00 AM" }
+        ListElement { name: "Jane Smith"; user_email: "jane.smith@example.com"; skate_size: "8"; skate_time: "11:00 AM - 12:00 PM" }
     }
 }

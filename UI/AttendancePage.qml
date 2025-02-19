@@ -22,7 +22,10 @@ Rectangle {
                 height: searchField.height
                 Material.background: Material.White
                 Material.foreground: Material.Black
-                onClicked: addUserDialog.open()
+                onClicked: {
+                    console.log("Opening addUserDialog")
+                    addUserDialog.open()
+                }
             }
 
             TextField {
@@ -36,32 +39,36 @@ Rectangle {
             }
         }
 
-        UserLog {
-            width: parent.width
-            height: parent.height - 100
-        }
-    }
-
-    Dialog {
-        id: addUserDialog
-        title: "Search User"
-        modal: true
-        standardButtons: Dialog.Ok | Dialog.Cancel
-        onAccepted: {
-            attendanceBackend.searchUserByEmail(emailField.text)
-        }
-
         Column {
             spacing: 10
-            padding: 10
 
-            TextField {
-                id: emailField
-                placeholderText: "Email"
-                width: parent.width
-                font.pixelSize: 16
-                Material.background: Material.White
-                Material.foreground: Material.Black
+            Button {
+                text: "Add User"
+                onClicked: {
+                    addUserDialog.open()
+                }
+            }
+        }
+
+        UserLog {
+            width: parent.width
+        }
+
+        Dialog {
+            id: addUserDialog
+            title: "Add User"
+            modal: true
+            standardButtons: Dialog.Ok | Dialog.Cancel
+            onAccepted: {
+                console.log("User added")
+            }
+
+            Column {
+                spacing: 10
+                TextField {
+                    id: emailField
+                    placeholderText: "Enter email"
+                }
             }
         }
     }
