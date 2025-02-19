@@ -39,17 +39,6 @@ Rectangle {
             }
         }
 
-        Column {
-            spacing: 10
-
-            Button {
-                text: "Add User"
-                onClicked: {
-                    addUserDialog.open()
-                }
-            }
-        }
-
         UserLog {
             width: parent.width
         }

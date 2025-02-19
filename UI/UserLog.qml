@@ -5,13 +5,11 @@ import QtQuick.Controls.Material 2.15
 Rectangle {
     width: parent.width
     height: parent.height
-    color: "#18392B"
 
     ListView {
         id: userListView
         width: parent.width
         height: parent.height
-        clip: true
         model: userModel
         delegate: Item {
             width: parent.width
@@ -45,7 +43,9 @@ Rectangle {
     Connections {
         target: attendanceBackend
         function onAddUser(user_info) {
-            userModel.append(user_info)
+            console.log("🟢 Received user info in QML:", user_info);
+            userModel.append(user_info);
         }
     }
+
 }

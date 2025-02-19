@@ -18,7 +18,7 @@ ApplicationWindow {
         // Fixed Sidebar
         Rectangle {
             id: sidebar
-            width: 50
+            width: 70
             height: parent.height
             color: "#2c3e50" // Dark Sidebar Color
 

@@ -1,5 +1,4 @@
 import re
-import threading
 
 class CardReader:
     def __init__(self, callback):
@@ -18,13 +17,7 @@ class CardReader:
         return student_id, name
 
     def start(self):
-        """Start a background thread to read swipe data from the card reader."""
-        t_thread = threading.Thread(target=self._read_card)
-        t_thread.daemon = True
-        t_thread.start()
-
-    def _read_card(self):
-        """Continuously reads swipe data from the card reader."""
+        """Read swipe data from the card reader."""
         while True:
             try:
                 swipe = input("Waiting for card: ")  # User swipes the card

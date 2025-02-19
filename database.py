@@ -33,7 +33,7 @@ class Database:
                     if user_info:
                         return {
                             "name": user_info[0],
-                            "email": user_info[1],
+                            "user_email": user_info[1],
                             "skate_size": user_info[2],
                             "skate_time": user_info[3]
                         }
@@ -55,7 +55,7 @@ class Database:
                     if user_info:
                         return {
                             "name": user_info[0],
-                            "email": user_info[1],
+                            "user_email": user_info[1],
                             "skate_size": user_info[2],
                             "skate_time": user_info[3]
                         }
