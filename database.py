@@ -62,3 +62,30 @@ class Database:
             except Exception as e:
                 print(f"Error querying database: {e}")
         return None
+    
+
+    def update_user_attendance(self, identifier, check_in_time):
+        """Update user attendance status in the reservations table."""
+        if self.connection:
+            try:
+                with self.connection.cursor() as cursor:
+                    if '@' in identifier:
+                        cursor.execute('''
+                            UPDATE reservations
+                            SET attendance = TRUE
+                                check_in_time = %s
+                            WHERE user_email = %s
+                        ''', (check_in_time, identifier))
+                    else:
+                        cursor.execute('''
+                            UPDATE reservations
+                            SET attendance = TRUE,
+                                check_in_time = %s
+                            WHERE student_id = %s
+                        ''', (check_in_time, identifier))
+                    self.connection.commit()
+                    return True
+            except Exception as e:
+                print(f"Error updating attendance in reservations table: {e}")
+                self.connection.rollback()
+            return False

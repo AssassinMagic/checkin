@@ -1,5 +1,6 @@
 from card_reader import CardReader
 from database import Database
+import datetime
 
 class AttendanceBackend():
     def __init__(self):
@@ -24,11 +25,12 @@ class AttendanceBackend():
         if db_user_info:
             print(f"User with student ID {student_id} found in the database.")
             print(f"Updated user info: {db_user_info}")
+            db_user_info["student_id"] = student_id
             return db_user_info
         else:
             print(f"User with student ID {student_id} not found in the database.")
             if 'user_email' not in user_info:
-                user_info['user_email'] = 'unknown@example.com'  # Default email if not provided
+                user_info['user_email'] = 'unknown'  # Default email if not provided
             if 'skate_size' not in user_info:
                 user_info['skate_size'] = 'unknown'  # Default skate size if not provided
             if 'skate_time' not in user_info:
@@ -43,4 +45,11 @@ class AttendanceBackend():
     def swipe_card(self, card_id):
         student_id, name = CardReader.parse(card_id)
         user_data = self.process_card_info({"student_id": student_id, "name": name})
+        if user_data["student_id"] == "N/A":
+            if user_data["user_email"] != "unknown":
+                self.database.update_user_attendance(user_data["user_email"], datetime.datetime.now())
+            else:
+                print("Can't find user to update attendance.")
+        else:
+            self.database.update_user_attendance(user_data["student_id"], datetime.datetime.now())
         return user_data
