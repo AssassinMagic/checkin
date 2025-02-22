@@ -1,24 +1,18 @@
-import re
-import psycopg2
 from card_reader import CardReader
 from database import Database
-
 
 class AttendanceBackend():
     def __init__(self):
         super().__init__()
         self.database = Database()
-        self.card_reader = CardReader(self.process_card_info)
+        self.card_reader = CardReader()
         self.users = []
 
-    def addUser(self, user_info):
-        return
-
     def searchUserByEmail(self, email):
-        """Search for a user by email and add to the ListModel if found."""
+        """Search for a user by email and return the user info if found."""
         user_info = self.database.get_user_by_email(email)
         if user_info:
-            self.addUser(user_info)
+            return user_info
 
     def process_card_info(self, user_info):
         """Process the card information and interact with the database."""
@@ -29,11 +23,10 @@ class AttendanceBackend():
         db_user_info = self.database.get_user_by_student_id(student_id)
         if db_user_info:
             print(f"User with student ID {student_id} found in the database.")
-            user_info.update(db_user_info)
-            print(f"Updated user info: {user_info}")
+            print(f"Updated user info: {db_user_info}")
+            return db_user_info
         else:
             print(f"User with student ID {student_id} not found in the database.")
-            # Ensure user_info has all required fields before adding to the database
             if 'user_email' not in user_info:
                 user_info['user_email'] = 'unknown@example.com'  # Default email if not provided
             if 'skate_size' not in user_info:
@@ -41,17 +34,13 @@ class AttendanceBackend():
             if 'skate_time' not in user_info:
                 user_info['skate_time'] = 'unknown'  # Default skate time if not provided
             print(f"Default user info: {user_info}")
-
-        # Emit the signal in the main thread
-        self.addUser(user_info)
-        print(f"Final user info sent to addUser: {user_info}")
+            return user_info
 
     def start_card_reader(self):
         """Start the card reader."""
         self.card_reader.start()
 
     def swipe_card(self, card_id):
-        # Simulate fetching user data based on card_id
-        user_data = {"Name": "John Doe", "Card ID": card_id, "Time": "10:00 AM"}
-        self.users.append(user_data)
+        student_id, name = CardReader.parse(card_id)
+        user_data = self.process_card_info({"student_id": student_id, "name": name})
         return user_data

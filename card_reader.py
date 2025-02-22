@@ -1,10 +1,9 @@
 import re
 
 class CardReader:
-    def __init__(self, callback):
-        self.callback = callback
 
-    def parse(self, swipe):
+    @staticmethod
+    def parse(swipe):
         """Extracts student ID and name from swipe data."""
         # Extract student ID (between first and second caret '^')
         match = re.search(r'\^([^ ^]+)\^', swipe)
