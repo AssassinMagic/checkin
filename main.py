@@ -1,62 +1,45 @@
 import sys
-from PyQt6.QtGui import QGuiApplication
-from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
-from PyQt6.QtQml import QQmlApplicationEngine, QQmlDebuggingEnabler
 from attendance import AttendanceBackend
 import time
-from PyQt6.QtCore import QTimer
-
-class Backend(QObject):
-    loadPageSignal = pyqtSignal(str, arguments=['loadPage'])
-
-    def __init__(self):
-        super().__init__()
-
-    @pyqtSlot(str)
-    def loadPage(self, page_name):
-        """Signal to load a new page dynamically."""
-        self.loadPageSignal.emit(page_name)
-
-def test_signal():
-    print("📡 Emitting test signal to QML...")
-    attendance_backend.addUserSignal.emit({
-        "name": "Test User",
-        "user_email": "test@example.com",
-        "skate_size": "42",
-        "skate_time": "10:00 AM"
-    })
-
-if __name__ == "__main__":
-    QQmlDebuggingEnabler()
-
-    # Start the PyQt6 application
-    app = QGuiApplication(sys.argv)
-    engine = QQmlApplicationEngine()
-
-    # Initialize backend **before** loading QML
-    backend = Backend()
-    attendance_backend = AttendanceBackend()
-
-    engine.rootContext().setContextProperty("backend", backend)
-    engine.rootContext().setContextProperty("attendanceBackend", attendance_backend)
-    print("✅ attendanceBackend registered in QML")
-
-    QTimer.singleShot(5000, test_signal)
-
-    attendance_backend.addUserSignal.connect(lambda _: backend.loadPageSignal.emit("UserLog.qml"))
-    attendance_backend.addUserSignal.connect(lambda user_info: print(f"📡 Signal emitted with: {user_info}"))
+import streamlit as st
 
 
-    # Load the QML UI
-    engine.quit.connect(app.quit)
-    engine.load('UI/main.qml')
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
 
-    if not engine.rootObjects():
-        sys.exit(-1)
+def login():
+    if st.button("Log in"):
+        st.session_state.logged_in = True
+        st.rerun()
 
-    # Start the card reader after the QML UI is loaded
-    print("Starting card reader...")
-    attendance_backend.start_card_reader()
+def logout():
+    if st.button("Log out"):
+        st.session_state.logged_in = False
+        st.rerun()
 
-    # Run the application
-    sys.exit(app.exec())
+login_page = st.Page(login, title="Log in", icon=":material/login:")
+logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
+
+# dashboard = st.Page(
+#     "reports/dashboard.py", title="Dashboard", icon=":material/dashboard:", default=True
+# )
+# bugs = st.Page("reports/bugs.py", title="Bug reports", icon=":material/bug_report:")
+# alerts = st.Page(
+#     "reports/alerts.py", title="System alerts", icon=":material/notification_important:"
+# )
+
+attendance = st.Page("tools/attendancePage.py", title="Attendance", icon=":material/check:")
+reservations = st.Page("tools/reservationsPage.py", title="Reservations", icon=":material/dashboard:")
+
+if st.session_state.logged_in:
+    pg = st.navigation(
+        {
+            "Account": [logout_page],
+            # "Reports": [dashboard, bugs, alerts],
+            "Tools": [attendance, reservations],
+        }
+    )
+else:
+    pg = st.navigation([login_page])
+
+pg.run()

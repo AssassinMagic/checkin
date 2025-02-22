@@ -1,24 +1,19 @@
 import re
 import psycopg2
-from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from card_reader import CardReader
 from database import Database
 
-class AttendanceBackend(QObject):
-    addUserSignal = pyqtSignal(dict, arguments=['addUser'])
 
+class AttendanceBackend():
     def __init__(self):
         super().__init__()
         self.database = Database()
         self.card_reader = CardReader(self.process_card_info)
+        self.users = []
 
-    @pyqtSlot(dict)
     def addUser(self, user_info):
-        """Add user information to the ListModel in QML."""
-        print(f"Emitting addUserSignal with: {user_info}")
-        self.addUserSignal.emit(user_info)
+        return
 
-    @pyqtSlot(str)
     def searchUserByEmail(self, email):
         """Search for a user by email and add to the ListModel if found."""
         user_info = self.database.get_user_by_email(email)
@@ -54,3 +49,9 @@ class AttendanceBackend(QObject):
     def start_card_reader(self):
         """Start the card reader."""
         self.card_reader.start()
+
+    def swipe_card(self, card_id):
+        # Simulate fetching user data based on card_id
+        user_data = {"Name": "John Doe", "Card ID": card_id, "Time": "10:00 AM"}
+        self.users.append(user_data)
+        return user_data
