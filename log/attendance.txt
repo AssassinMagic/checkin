@@ -1,1 +1,1 @@
-2025-02-22 18:48:49.813792: {'name': 'Eshaan Test', 'user_email': 'jay00015@umn.edu', 'skate_size': 'I have my own', 'skate_time': '2:00 - 3:00 PM', 'student_id': '5916780'}
+2025-02-22 23:50:59.508261: {'name': 'Eshaan Test', 'user_email': 'jay00015@umn.edu', 'skate_size': 'I have my own', 'skate_time': '2:00 - 3:00 PM', 'student_id': '5916780'}

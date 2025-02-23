@@ -105,11 +105,11 @@ class Database:
                     checked_in_users = []
                     for user in data:
                         checked_in_users.append({
-                            "student_id": user[2],
-                            "name": user[0],
                             "user_email": user[1],
-                            "skate_size": user[3],
-                            "skate_time": user[4],
+                            "name": user[2],
+                            "student_id": user[3],
+                            "skate_size": user[4],
+                            "skate_time": user[5],
                         })
                         print(checked_in_users)
                     return checked_in_users
