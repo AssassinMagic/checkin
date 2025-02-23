@@ -20,14 +20,6 @@ def logout():
 login_page = st.Page(login, title="Log in", icon=":material/login:")
 logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
 
-# dashboard = st.Page(
-#     "reports/dashboard.py", title="Dashboard", icon=":material/dashboard:", default=True
-# )
-# bugs = st.Page("reports/bugs.py", title="Bug reports", icon=":material/bug_report:")
-# alerts = st.Page(
-#     "reports/alerts.py", title="System alerts", icon=":material/notification_important:"
-# )
-
 attendance = st.Page("tools/attendancePage.py", title="Attendance", icon=":material/check:")
 reservations = st.Page("tools/reservationsPage.py", title="Reservations", icon=":material/dashboard:")
 
@@ -35,7 +27,6 @@ if st.session_state.logged_in:
     pg = st.navigation(
         {
             "Account": [logout_page],
-            # "Reports": [dashboard, bugs, alerts],
             "Tools": [attendance, reservations],
         }
     )
