@@ -106,8 +106,8 @@ class Database:
                     for user in data:
                         checked_in_users.append({
                             "student_id": user[2],
-                            "name": user[1],
-                            "user_email": user[0],
+                            "name": user[0],
+                            "user_email": user[1],
                             "skate_size": user[3],
                             "skate_time": user[4],
                         })
